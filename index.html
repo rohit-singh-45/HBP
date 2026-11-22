@@ -777,6 +777,25 @@
                             </div>
                             <span class="text-2xl">&hearts;</span>
                         </div>
+
+                        <!-- Proposal Reply Section -->
+                        <div id="proposalReplyBox" class="mt-5 pt-4 border-t border-[#f5d08a]/25 text-center">
+                            <p class="font-serif italic text-base sm:text-lg text-[#f5d08a] mb-3">
+                                So, what do you say, Prachi? ✨
+                            </p>
+                            <div id="replyButtonsGroup" class="flex flex-wrap items-center justify-center gap-3">
+                                <button type="button" onclick="sendProposalReply('yes')"
+                                    class="btn-glow px-6 py-2.5 rounded-full text-slate-950 font-bold text-sm cursor-pointer transition">
+                                    Yes, I will! ❤️
+                                </button>
+                                <button type="button" onclick="sendProposalReply('no')"
+                                    class="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-rose-100/85 font-medium text-sm transition cursor-pointer">
+                                    Let's talk / No
+                                </button>
+                            </div>
+                            <p id="replyStatusText" class="hidden mt-3 text-xs sm:text-sm text-[#f4a2b8] font-medium">
+                            </p>
+                        </div>
                     </div>
 
                     <!-- Interactive Wish Lantern & Replay Controls -->
@@ -867,9 +886,9 @@
     <!-- ========================================================= -->
     <script>
         /**
-         * 1. WEB AUDIO API SYNTHESIZER (Zero External Sound URLs)
-         * Generates balloon pops, card flip chimes, match bells, candle blow whoosh,
-         * countdown ticks, camera shutter click, and celesta "Happy Birthday to You" melody.
+- 1. WEB AUDIO API SYNTHESIZER (Zero External Sound URLs)
+- Generates balloon pops, card flip chimes, match bells, candle blow whoosh,
+- countdown ticks, camera shutter click, and celesta "Happy Birthday to You" melody.
          */
         class SoundEffects {
             constructor() {
@@ -1062,7 +1081,7 @@
         const sfx = new SoundEffects();
 
         /**
-         * 2. APPLICATION STATE (name hardcoded as Prachi)
+- 2. APPLICATION STATE (name hardcoded as Prachi)
          */
         const state = {
             name: 'Prachi',
@@ -1088,7 +1107,7 @@
         }
 
         /**
-         * 3. STAGE & MINI-GAME NAVIGATION
+- 3. STAGE & MINI-GAME NAVIGATION
          */
         function switchStage(stageNumber) {
             state.currentStage = stageNumber;
@@ -1158,7 +1177,7 @@
         }
 
         /**
-         * 4. MINI-GAME 1: POP 7 BIRTHDAY BALLOONS
+- 4. MINI-GAME 1: POP 7 BIRTHDAY BALLOONS
          */
         let balloonInterval = null;
         let balloonAnimFrame = null;
@@ -1290,7 +1309,7 @@
         }
 
         /**
-         * 5. MINI-GAME 2: BIRTHDAY KEEPSAKE MATCH (3x2 = 6 Cards)
+- 5. MINI-GAME 2: BIRTHDAY KEEPSAKE MATCH (3x2 = 6 Cards)
          */
         let flippedCards = [];
         let matchedPairs = 0;
@@ -1386,7 +1405,7 @@
         }
 
         /**
-         * 6. MINI-GAME 3: BLOW OUT THE CANDLES
+- 6. MINI-GAME 3: BLOW OUT THE CANDLES
          */
         let candlesLit = 5;
 
@@ -1458,7 +1477,7 @@
         }
 
         /**
-         * 7. STAGE 3: WEBRTC LIVE CAMERA BIRTHDAY PHOTO BOOTH STUDIO
+- 7. STAGE 3: WEBRTC LIVE CAMERA BIRTHDAY PHOTO BOOTH STUDIO
          */
         async function startCamera() {
             const video = document.getElementById('cameraVideo');
@@ -1604,15 +1623,15 @@
         }
 
         /**
-         * 8. STAGE 4: 900x1200 HD BIRTHDAY WISH CARD COMPOSITOR (HTML5 CANVAS)
-         * Composites:
-         * - Softly blurred, dreamy ambient backdrop of her own captured photo
-         * - Crisp sharp portrait framed in the center with ornate champagne & rose-gold border
-         * - Selected overlay style accents (Crown / Editorial / Fairy Lights)
-         * - Festive golden & rose-gold balloons, twinkling star flares, metallic confetti
-         * - Bold glittering Playfair Display title ("HAPPY BIRTHDAY, [HER NAME]!")
-         * - Subtitle ("Wishing you a day as special as you are ✨")
-         * - Bottom ribbon banner ("29th DECEMBER")
+- 8. STAGE 4: 900x1200 HD BIRTHDAY WISH CARD COMPOSITOR (HTML5 CANVAS)
+- Composites:
+- - Softly blurred, dreamy ambient backdrop of her own captured photo
+- - Crisp sharp portrait framed in the center with ornate champagne & rose-gold border
+- - Selected overlay style accents (Crown / Editorial / Fairy Lights)
+- - Festive golden & rose-gold balloons, twinkling star flares, metallic confetti
+- - Bold glittering Playfair Display title ("HAPPY BIRTHDAY, [HER NAME]!")
+- - Subtitle ("Wishing you a day as special as you are ✨")
+- - Bottom ribbon banner ("29th DECEMBER")
          */
         function drawRoundedRectPath(ctx, x, y, w, h, r) {
             ctx.beginPath();
@@ -2034,7 +2053,7 @@
         }
 
         /**
-         * 9. GRAND FINALE: FIREWORKS, CONFETTI & FLOATING WISH LANTERNS
+- 9. GRAND FINALE: FIREWORKS, CONFETTI & FLOATING WISH LANTERNS
          */
         let finaleActive = false;
         let fireworkTimer = null;
@@ -2082,7 +2101,7 @@
         }
 
         /**
-         * 10. DUAL CANVAS PARTICLE ENGINE (Twilight Bokeh + Fireworks/Confetti)
+- 10. DUAL CANVAS PARTICLE ENGINE (Twilight Bokeh + Fireworks/Confetti)
          */
         const bgCanvas = document.getElementById('bgCanvas');
         const bgCtx = bgCanvas.getContext('2d');
@@ -2253,7 +2272,53 @@
         }
 
         /**
-         * 11. EVENT LISTENERS & INITIALIZATION
+- 11. PROPOSAL REPLY HANDLER (WEB3FORMS SILENT EMAIL)
+         */
+        async function sendProposalReply(choice) {
+            const accessKey = '275c4ce8-3012-43f9-b06d-213f50e1e0fa';
+            const statusEl = document.getElementById('replyStatusText');
+            const buttons = document.querySelectorAll('#replyButtonsGroup button');
+
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
+            });
+
+            statusEl.classList.remove('hidden');
+
+            const isYes = choice === 'yes';
+            if (isYes) {
+                sfx.playHappyBirthdayMelody();
+                launchFirework(window.innerWidth * 0.5, window.innerHeight * 0.25);
+                spawnConfettiShower(130);
+                statusEl.textContent = 'You just made me the happiest guy alive! ❤️✨';
+            } else {
+                sfx.playChime(523.25, 0, 0.4, 0.12);
+                statusEl.textContent = 'Thank you for being honest with me, Prachi—no pressure at all. ✨';
+            }
+
+            try {
+                await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        access_key: accessKey,
+                        subject: isYes ? '❤️ Prachi clicked YES!' : '✨ Prachi clicked Let’s talk / No',
+                        from_name: 'December 29th Birthday Page',
+                        answer: isYes ? 'YES, I will! ❤️' : "Let's talk / No",
+                        timestamp: new Date().toLocaleString()
+                    })
+                });
+            } catch (err) {
+                // Keeps the on-screen celebration smooth even on weak connections
+            }
+        }
+
+        /**
+- 12. EVENT LISTENERS & INITIALIZATION
          */
         window.addEventListener('resize', resizeCanvases);
 
